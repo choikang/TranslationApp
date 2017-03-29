@@ -39,10 +39,11 @@ public class AdminView extends Application implements ViewObserver{
 			List<PerformedTranslation> performedTransList = StoreAndLoadTranslation.getInstance().loadTrans();
 			ObservableList<String> oPerformedTrans = FXCollections.observableArrayList();
 			
-			for (PerformedTranslation performed : performedTransList ) {
-				String tmp = performed.getExpressionGER() + "\t\t-->>\t\t" + performed.getExpressionEN();
-				oPerformedTrans.add(tmp);
-			}
+			if (!performedTransList.isEmpty())
+				for (PerformedTranslation performed : performedTransList ) {
+					String tmp = performed.getExpressionGER() + "\t\t-->>\t\t" + performed.getExpressionEN();
+					oPerformedTrans.add(tmp);
+				}
 			listView.setItems(oPerformedTrans);
 			
 			//Create "close" button to close and unsubscribe the stage

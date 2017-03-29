@@ -81,6 +81,10 @@ public class TranslationNumber {
 		return translation;
 	}
 	
+	public HashMap<String, String> getNumMap() {
+		return number;
+	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -88,5 +92,4 @@ public class TranslationNumber {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 }

@@ -1,5 +1,6 @@
 package org.vgu.se.translationapp.model.logic;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,7 +44,13 @@ public class StoreAndLoadTranslation {
 	public List<PerformedTranslation> loadTrans () throws IOException, ClassNotFoundException {
 		List<PerformedTranslation> myList = new ArrayList<PerformedTranslation>();
 		FileInputStream fis = new FileInputStream("store.txt");
-		ObjectInputStream ois = new ObjectInputStream(fis);
+		ObjectInputStream ois = null;
+		
+		try {
+			ois = new ObjectInputStream(fis);
+		} catch (Exception e) {
+			return myList;
+		}
 		
 		myList =  (List<PerformedTranslation>) ois.readObject();
 		
