@@ -81,6 +81,10 @@ public class TranslationNumber {
 		return translation;
 	}
 	
+	public HashMap<String, String> getNumMap() {
+		return number;
+	}
+	
 	public User getUser() {
 		return user;
 	}
