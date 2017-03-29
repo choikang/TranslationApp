@@ -32,26 +32,33 @@ public class Main {
 		tnObject.signIn(userID);
 		
 		System.out.println("Welcome! Please find your desired options as following: " + "\n" +
-				   		   "1. German - English Translator" + "\n" +
-				   		   "2. Request translation for not yet supported word/phrase" + "\n" +
-				   		   "3. Print your translation history." + "\n" +
-				   		   "4. Admin view: Translation history" + "\n" +
-				   		   "5. Admin view: Searching statistics" + "\n" +
-				   		   "6. Exit");
-		while (option != 6) {
+				   		   "1. German - English Num Translator" + "\n" +
+				   		   "2. German - English Phrase Translator" + "\n" +
+				   		   "3. Request translation for not yet supported word/phrase" + "\n" +
+				   		   "4. Print your translation history." + "\n" +
+				   		   "5. Admin view: Translation history" + "\n" +
+				   		   "6. Admin view: Searching statistics" + "\n" +
+				   		   "7. Exit");
+		while (option != 7) {
 			System.out.print("My choice is: ");
 			option = sc.nextInt();
 			if (option == 1) {
-				System.out.print("German word/phrase: ");
+				System.out.print("German word: ");
 				input = sc.next();
-				result = tnObject.translate(input);
+				result = tnObject.translateNum(input);
 				System.out.println("Translation Result: " + result);
 			}
 			else if (option == 2) {
+				System.out.print("German term/phrase: ");
+				input = sc.next();
+				result = tnObject.translateNum(input);
+				System.out.println("Translation Result: " + result);
+			}
+			else if (option == 3) {
 				System.out.print("German word/phrase: ");
 				System.out.println("Much appreciation for your contribution.");
 			}
-			else if (option == 3) {
+			else if (option == 4) {
 				storedList = dbObject.getListOfCurrentTranslation();
 				if (storedList.size() == 0) {
 					System.out.println("No history yet recorded.");
@@ -66,6 +73,9 @@ public class Main {
 				}
 			}
 			else if (option == 4) {
+				
+			}
+			else if (option == 5) {
 				//launch javafx stage in a different thread in order to allow current program keep running
 				(new Thread() {
 					public void run(){
@@ -74,6 +84,10 @@ public class Main {
 				}).start();
 			}
 			else if (option == 6){
+			
+			}
+			else if (option == 7){
+
 				System.out.println("The application is closing in 3..2..1..");
 			}
 			else {
