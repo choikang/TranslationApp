@@ -1,13 +1,12 @@
 package org.vgu.se.translationapp.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.vgu.se.translationapp.model.entities.PerformedTranslation;
 import org.vgu.se.translationapp.model.logic.StoreAndLoadTranslation;
 
-import javafx.application.Application;
+import javafx.application.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.*;
@@ -26,54 +25,68 @@ public class AdminView extends Application implements ViewObserver{
 		return adminView;
 	}
 	
+	private static Stage primaryStage;
+	
 	ListView<String> listView = new ListView<>();
+	
 	
 	
 	@Override
 	public void update() {
-		
-//		List<PerformedTranslation> performedTransList = null;
 		try {
+			//Create a list of string from a list of translation object to print that on screen
+			
 			List<PerformedTranslation> performedTransList = StoreAndLoadTranslation.getInstance().loadTrans();
 			ObservableList<String> oPerformedTrans = FXCollections.observableArrayList();
 			
 			for (PerformedTranslation performed : performedTransList ) {
-				String tmp = "German: " + performed.getExpressionGER() + "\tEnglish: " + performed.getExpressionEN();
+				String tmp = performed.getExpressionGER() + "\t\t-->>\t\t" + performed.getExpressionEN();
 				oPerformedTrans.add(tmp);
 			}
 			listView.setItems(oPerformedTrans);
+			
+			//Create "close" button to close and unsubscribe the stage
+			Button closeBtn = new Button("Close");
+			closeBtn.setOnAction(e -> {
+				StoreAndLoadTranslation.getInstance().unregister(AdminView.getInstance());
+				primaryStage.close();
+			});
+			
+			//Set layout for the stage
+			VBox layout = new VBox();			
+			layout.getChildren().addAll(closeBtn, listView);
+			
+			Scene scene = new Scene(layout, 600, 300);
+			
+			
+			Platform.runLater(new Runnable(){
+				@Override
+				public void run() {
+					primaryStage.setScene(scene);
+					primaryStage.show();	
+				}
+			});
+			
+			
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws ClassNotFoundException, IOException {
+		
+		AdminView.primaryStage = primaryStage;
+		AdminView.primaryStage.setTitle("Performed Translation");
+		
+		//subscribe this view to the Database
+		StoreAndLoadTranslation.getInstance().register(AdminView.getInstance());
 			
-		Label title = new Label("Performed Translation list:");
-		Button closeBtn = new Button("Close");
-		closeBtn.setOnAction(e -> {
-			StoreAndLoadTranslation.getInstance().unregister(AdminView.getInstance());
-			primaryStage.close();
-		});
-		
-		update();		
-		
-		//set up scene
-		primaryStage.setTitle("Performed Translation");
-		
-		VBox layout = new VBox();
-		layout.getChildren().addAll(title, listView, closeBtn);
-		
-		Scene scene = new Scene(layout, 400, 200);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		//print the result
+		update();			
 	}
 
-	public static void main(String[] args) {
-		StoreAndLoadTranslation.getInstance().register(AdminView.getInstance());
+	public static void main(String[] args) {	
 		launch(args);
 	}
-
-	
 }

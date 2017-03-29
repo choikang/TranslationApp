@@ -40,7 +40,7 @@ public class StoreAndLoadTranslation {
 	 * @throws PersistenceExeception
 	 */
 	
-	public static List<PerformedTranslation> loadTrans () throws IOException, ClassNotFoundException {
+	public List<PerformedTranslation> loadTrans () throws IOException, ClassNotFoundException {
 		List<PerformedTranslation> myList = new ArrayList<PerformedTranslation>();
 		FileInputStream fis = new FileInputStream("store.txt");
 		ObjectInputStream ois = new ObjectInputStream(fis);
@@ -107,6 +107,9 @@ public class StoreAndLoadTranslation {
 		  if (oos != null) try { oos.close(); } catch (IOException e) {}
 		  if (fos != null) try { fos.close(); } catch (IOException e) {}
 		}
+		
+		//notify to all subscriber
+		publish();
 	}
 
 	public List<PerformedTranslation> getListOfCurrentTranslation() {
@@ -120,10 +123,9 @@ public class StoreAndLoadTranslation {
 
 	public void addTranslation(PerformedTranslation performedTrans) {
 		this.listOfTranslation.add( performedTrans );
-		publish();
 	}
 	
-	List<ViewObserver> observerList = new ArrayList<ViewObserver>();
+	public List<ViewObserver> observerList = new ArrayList<ViewObserver>();
 	
 	public void register(ViewObserver observer) {
 		observerList.add(observer);

@@ -8,6 +8,9 @@ import org.vgu.se.translationapp.model.entities.PerformedTranslation;
 import org.vgu.se.translationapp.model.logic.PersistenceExeception;
 import org.vgu.se.translationapp.model.logic.StoreAndLoadTranslation;
 import org.vgu.se.translationapp.model.logic.TranslationNumber;
+import org.vgu.se.translationapp.view.AdminView;
+
+import javafx.application.Application;
 
 
 public class Main {
@@ -79,7 +82,22 @@ public class Main {
 					System.out.println("Translation history loaded successfully.");
 				}
 			}
+			else if (option == 4) {
+				
+			}
+			else if (option == 5) {
+				//launch javafx stage in a different thread in order to allow current program keep running
+				(new Thread() {
+					public void run(){
+						Application.launch(AdminView.class, args);
+					}
+				}).start();
+			}
+			else if (option == 6){
+			
+			}
 			else if (option == 7){
+
 				System.out.println("The application is closing in 3..2..1..");
 			}
 			else {
