@@ -39,6 +39,20 @@ public class StoreAndLoadTranslation {
 	 * Client should perform this method before any new Objects are inserted!
 	 * @throws PersistenceExeception
 	 */
+	
+	public List<PerformedTranslation> loadTrans () throws IOException, ClassNotFoundException {
+		List<PerformedTranslation> myList = new ArrayList<PerformedTranslation>();
+		FileInputStream fis = new FileInputStream("store.txt");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		myList =  (List<PerformedTranslation>) ois.readObject();
+		
+		ois.close();
+		fis.close();
+		return myList;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public void loadPerformedTranslations() throws PersistenceExeception {
 		ObjectInputStream ois = null;
 		FileInputStream fis = null;
@@ -56,8 +70,8 @@ public class StoreAndLoadTranslation {
 		}
 		catch (IOException e) {
 			// Re-throw the exception to the calling context
-			throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
-
+			//throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
+			
 		}
 		catch (ClassNotFoundException e) {
 			// Re-throw the exception to the calling context
@@ -108,6 +122,7 @@ public class StoreAndLoadTranslation {
 
 	public void addTranslation(PerformedTranslation performedTrans) {
 		this.listOfTranslation.add( performedTrans );
+		publish();
 	}
 	
 	List<ViewObserver> observerList = new ArrayList<ViewObserver>();
@@ -120,9 +135,9 @@ public class StoreAndLoadTranslation {
 		observerList.remove(observer);
 	}
 	
-	public void publish(PerformedTranslation translation) {
+	private void publish() {
 		for (ViewObserver observer : observerList) {
-			observer.update(translation);
+			observer.update();
 		}
 	}
 }
