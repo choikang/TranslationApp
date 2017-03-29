@@ -68,7 +68,7 @@ public class StoreAndLoadTranslation {
 		}
 		catch (IOException e) {
 			// Re-throw the exception to the calling context
-			throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
+			//throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
 
 		}
 		catch (ClassNotFoundException e) {
