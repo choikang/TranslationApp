@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.vgu.se.translationapp.model.entities.PerformedTranslation;
+import org.vgu.se.translationapp.view.ViewObserver;
+
+import javafx.beans.Observable;
 
 
 public class StoreAndLoadTranslation {
@@ -17,7 +20,7 @@ public class StoreAndLoadTranslation {
 
 	private static StoreAndLoadTranslation translation = null;
 
-	public final static String LOCATION = "tmp/store.txt";
+	public final static String LOCATION = "store.txt";
 
 	private StoreAndLoadTranslation() {
 		listOfTranslation = new ArrayList<PerformedTranslation>();
@@ -77,7 +80,7 @@ public class StoreAndLoadTranslation {
 		ObjectOutputStream oos = null;
 		FileOutputStream fos = null;
 		try {
-		  fos = new FileOutputStream( "tmp/store.txt" );
+		  fos = new FileOutputStream( "store.txt" );
 		  oos = new ObjectOutputStream(fos);
 
 		  oos.writeObject( this.listOfTranslation );
@@ -106,9 +109,22 @@ public class StoreAndLoadTranslation {
 	public void addTranslation(PerformedTranslation performedTrans) {
 		this.listOfTranslation.add( performedTrans );
 	}
+	
+	List<ViewObserver> observerList = new ArrayList<ViewObserver>();
+	
+	public void register(ViewObserver observer) {
+		observerList.add(observer);
+	}
 
-
-
+	public void unregister(ViewObserver observer) {
+		observerList.remove(observer);
+	}
+	
+	public void publish(PerformedTranslation translation) {
+		for (ViewObserver observer : observerList) {
+			observer.update(translation);
+		}
+	}
 }
 
 
