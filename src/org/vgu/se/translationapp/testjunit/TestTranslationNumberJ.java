@@ -14,9 +14,9 @@ public class TestTranslationNumberJ {
 
 	@Before
 	public void setUp() throws Exception {
-		eins = trans.translate("eins");
-		zwei = trans.translate("zwei");
-		negTest = trans.translate("hahaha");
+		eins = trans.translateNum("eins");
+		zwei = trans.translateNum("zwei");
+		negTest = trans.translateNum("hahaha");
 	}
 
 	@Test

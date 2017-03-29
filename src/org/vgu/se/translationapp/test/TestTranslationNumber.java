@@ -7,7 +7,7 @@ public class TestTranslationNumber {
 	
 	public void run() throws PersistenceExeception {
 		TranslationNumber trans = new TranslationNumber();
-		String eins = trans.translate("eins");
+		String eins = trans.translateNum("eins");
 		
 		boolean statusTest = true;
 		
@@ -18,7 +18,7 @@ public class TestTranslationNumber {
 			statusTest = false;
 		}
 		
-		String zwei = trans.translate("zwei");
+		String zwei = trans.translateNum("zwei");
 		
 		if (zwei.equals("two")) {
 			System.out.println("Input: zwei, Expected Output = Actual Output: two! --> Test Case succesful!" );
@@ -27,7 +27,7 @@ public class TestTranslationNumber {
 			statusTest = false;
 		}
 		
-		String negTest = trans.translate("hahaha");
+		String negTest = trans.translateNum("hahaha");
 		
 		if (negTest.equals("I don't understand")) {
 			System.out.println("Illegial Input given, Expected Output = Actual Output: I don't understand! --> Test Case succesful!" );
