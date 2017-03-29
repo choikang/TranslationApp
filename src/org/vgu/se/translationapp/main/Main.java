@@ -23,7 +23,9 @@ public class Main {
 		
 		int option = 0; 
 		int userID = 0;
+		boolean flag = false;
 		String input = "", result = "";
+		String in = "";
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("-------------------TRANSLATION PROGRAM-------------------");
@@ -40,8 +42,16 @@ public class Main {
 				   		   "6. Admin view: Searching statistics" + "\n" +
 				   		   "7. Exit");
 		while (option != 7) {
-			System.out.print("My choice is: ");
-			option = sc.nextInt();
+			while (flag == false) {
+				System.out.print("My choice is: ");
+				in = sc.next();
+				try {
+					option = Integer.parseInt(in);
+					flag = true;
+				} catch (Exception e) {
+					System.out.println("Input format not supported. Please try again.");
+				}
+			}
 			if (option == 1) {
 				System.out.print("German word: ");
 				input = sc.next();
@@ -93,6 +103,7 @@ public class Main {
 			else {
 				System.out.println("Mismatch Command Input. Please try again");
 			}
+			flag = false;
 		}
 		
 		sc.close();
