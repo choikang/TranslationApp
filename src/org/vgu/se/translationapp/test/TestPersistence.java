@@ -14,7 +14,7 @@ import org.vgu.se.translationapp.model.logic.StoreAndLoadTranslation;
 public class TestPersistence {
 	private PerformedTranslation pt1 = new PerformedTranslation();
 	private PerformedTranslation pt2 = new PerformedTranslation();
-	private List<PerformedTranslation> liste = new ArrayList<PerformedTranslation>();
+	private List<PerformedTranslation> list = new ArrayList<PerformedTranslation>();
 	private int sizeAfter;
 	private int sizeBefore;
 
@@ -64,14 +64,14 @@ public class TestPersistence {
 		sizeAfter = StoreAndLoadTranslation.getInstance().size();
 
 		// Get current List
-		liste = StoreAndLoadTranslation.getInstance().getListOfCurrentTranslation();
+		list = StoreAndLoadTranslation.getInstance().getListOfCurrentTranslation();
 	}
 
 
 	@Test
 	public void testPersistence() {
-		assertEquals(liste.get(0),pt1);
-		assertEquals(liste.get(1),pt2);
+		assertTrue(list.get(0).equals(pt1));
+		assertTrue(list.get(1).equals(pt2));
 	}
 
 	@Test
