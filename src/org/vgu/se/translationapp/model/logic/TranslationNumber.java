@@ -8,6 +8,8 @@ public class TranslationNumber {
 	
 	private HashMap<String,String> numbers = null;
 	
+	StoreAndLoadTranslation dbaccess = StoreAndLoadTranslation.getInstance();
+	
 	private User user = null;
 	
 	public TranslationNumber() {
@@ -15,8 +17,13 @@ public class TranslationNumber {
 		setUpNumbers();
 		
 		// A single user is created for testing 
+//		user = new User();
+//		user.setId(newuser);
+	}
+	
+	public void signIn(int newuser) {
 		user = new User();
-		user.setId(1);
+		user.setId(newuser);
 	}
 	
 	private void setUpNumbers() {
@@ -30,11 +37,21 @@ public class TranslationNumber {
 		
 	}
 
-	public String translate ( final String numberGER ) {
+	public String translate ( final String numberGER ) throws PersistenceExeception {
 		// Perform the actual translation
 		String translation = this.numbers.get( numberGER );
 		
-		if (translation == null) return "I don't understand";
+		if (translation == null) {
+			PerformedTranslation performedTrans = new PerformedTranslation();
+			performedTrans.setExpressionGER(numberGER);
+			performedTrans.setExpressionEN("NO RESULT FOUND");
+			performedTrans.setUserID( this.getUser().getId()  );
+			
+			dbaccess.addTranslation( performedTrans );
+			dbaccess.storePerformedTranslations();
+			
+			return "I don't understand";
+		}
 		
 		// Create the PerformedTranslation object
 		PerformedTranslation performedTrans = new PerformedTranslation();
@@ -47,7 +64,8 @@ public class TranslationNumber {
 		
 		// Add the PerformedTranslation object to the internal list
 		// (by getting the Singleton first!)
-		StoreAndLoadTranslation.getInstance().addTranslation( performedTrans );
+		dbaccess.addTranslation( performedTrans );
+		dbaccess.storePerformedTranslations();
 		
 		return translation;
 	}

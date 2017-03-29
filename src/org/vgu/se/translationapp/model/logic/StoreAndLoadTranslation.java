@@ -11,7 +11,7 @@ import java.util.List;
 import org.vgu.se.translationapp.model.entities.PerformedTranslation;
 import org.vgu.se.translationapp.view.ViewObserver;
 
-import javafx.beans.Observable;
+//import javafx.beans.Observable;
 
 
 public class StoreAndLoadTranslation {
@@ -39,6 +39,7 @@ public class StoreAndLoadTranslation {
 	 * Client should perform this method before any new Objects are inserted!
 	 * @throws PersistenceExeception
 	 */
+	@SuppressWarnings("unchecked")
 	public void loadPerformedTranslations() throws PersistenceExeception {
 		ObjectInputStream ois = null;
 		FileInputStream fis = null;
@@ -56,8 +57,8 @@ public class StoreAndLoadTranslation {
 		}
 		catch (IOException e) {
 			// Re-throw the exception to the calling context
-			throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
-
+			//throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
+			
 		}
 		catch (ClassNotFoundException e) {
 			// Re-throw the exception to the calling context
