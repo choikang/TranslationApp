@@ -1,14 +1,25 @@
 package org.vgu.se.translationapp.test;
 
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
-import org.vgu.se.translationapp.model.entities.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.vgu.se.translationapp.model.entities.PerformedTranslation;
 import org.vgu.se.translationapp.model.logic.PersistenceExeception;
 import org.vgu.se.translationapp.model.logic.StoreAndLoadTranslation;
 
 public class TestPersistence {
+	private PerformedTranslation pt1 = new PerformedTranslation();
+	private PerformedTranslation pt2 = new PerformedTranslation();
+	private List<PerformedTranslation> liste = new ArrayList<PerformedTranslation>();
+	private int sizeAfter;
+	private int sizeBefore;
 
-	public void run() {
+	@Before
+	public void setUp() throws Exception{
 
 		// Load Data, so that new Objects will be added correctly, without deleting old ones
 		try {
@@ -19,13 +30,13 @@ public class TestPersistence {
 		}
 
 		// Grab current number of objects:
-		int sizeBefore = StoreAndLoadTranslation.getInstance().size();
+		sizeBefore = StoreAndLoadTranslation.getInstance().size();
 
-		PerformedTranslation pt1 = new PerformedTranslation();
+
 		pt1.setExpressionGER("eins");
 		pt1.setExpressionEN("one");
 
-		PerformedTranslation pt2 = new PerformedTranslation();
+
 		pt2.setExpressionGER("zwei");
 		pt2.setExpressionEN("two");
 
@@ -50,53 +61,23 @@ public class TestPersistence {
 		}
 
 		// Get the new size:
-		int sizeAfter = StoreAndLoadTranslation.getInstance().size();
+		sizeAfter = StoreAndLoadTranslation.getInstance().size();
 
 		// Get current List
-		List<PerformedTranslation> liste = StoreAndLoadTranslation.getInstance().getListOfCurrentTranslation();
-
-		// Check, if data in the re-loaded list is the same as before:
-		boolean statusTest = true;
-		for ( PerformedTranslation pt : liste ) {
-			if (pt.equals(pt1) && ( pt.hashCode() == pt1.hashCode() )) {
-				statusTest = true;
-			} else if (pt.equals(pt2) && ( pt.hashCode() == pt2.hashCode() ) ) {
-				statusTest = true;
-			} else {
-				statusTest = false;
-			}
-		}
-
-		boolean overallTest = true;
-		// Print out status on Test Case for checking the objects
-		if (statusTest) {
-			System.out.println("Test Report: Stored objects could be found again! --> Test Case successful!");
-		} else {
-			System.out.println("Test Report: Stored objects could NOT be found again! --> Test Case NOT successful!");
-			overallTest = false;
-		}
-
-		// Check size, print status:
-		if ( sizeAfter == sizeBefore + 2 ) {
-			System.out.println("Test Report: Loaded List has been increased by 2! Before: " + sizeBefore + ", After: " + sizeAfter + "--> Test Case successful!" );
-		} else {
-			System.out.println("Test Report: Loaded List has NOT been increased by 2! Before: " + sizeBefore + ", After: " + sizeAfter + "--> Test Case NOT successful!");
-			overallTest = false;
-		}
-
-		// Print final Report for Test Suite
-		if (overallTest) {
-			System.out.println("All Test Cases are successful --> Test Suite successful!");
-		} else {
-			System.out.println("Some Test Cases are NOT successful --> Test Suite NOT successful!");
-		}
-
+		liste = StoreAndLoadTranslation.getInstance().getListOfCurrentTranslation();
 	}
 
-	public static void main(String[] args) {
-		TestPersistence pers = new TestPersistence();
-		pers.run();
 
+	@Test
+	public void testPersistence() {
+		assertEquals(liste.get(0),pt1);
+		assertEquals(liste.get(1),pt2);
 	}
+
+	@Test
+	public void testSize(){
+		assertEquals(sizeBefore + 2,sizeAfter);
+	}
+
 
 }

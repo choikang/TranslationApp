@@ -1,48 +1,36 @@
 package org.vgu.se.translationapp.test;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 import org.vgu.se.translationapp.model.logic.PersistenceExeception;
 import org.vgu.se.translationapp.model.logic.TranslationNumber;
 
-public class TestTranslationNumber { 
-	
-	public void run() throws PersistenceExeception {
-		TranslationNumber trans = new TranslationNumber();
-		String eins = trans.translateNum("eins");
-		
-		boolean statusTest = true;
-		
-		if (eins.equals("one")) {
-			System.out.println("Input: eins, Expected Output = Actual Output: one! --> Test Case succesful!" );
-		} else {
-			System.out.println("Input: eins, Expected Output is one, but was: " + eins + " ! --> Test Case NOT succesful!" );
-			statusTest = false;
-		}
-		
-		String zwei = trans.translateNum("zwei");
-		
-		if (zwei.equals("two")) {
-			System.out.println("Input: zwei, Expected Output = Actual Output: two! --> Test Case succesful!" );
-		} else {
-			System.out.println("Input: zwei, Expected Output is two, but was: " + zwei + " ! --> Test Case NOT succesful!" );
-			statusTest = false;
-		}
-		
-		String negTest = trans.translateNum("hahaha");
-		
-		if (negTest.equals("I don't understand")) {
-			System.out.println("Illegial Input given, Expected Output = Actual Output: I don't understand! --> Test Case succesful!" );
-		} else {
-			System.out.println("Illegial Input given, Expected Output = I don't understand, but was: " + negTest + " ! --> Test Case NOT succesful!" );
-			statusTest = false;
-		}
-		
-		
-		
-		if (statusTest) {
-			System.out.println("\nTest Suite was successful!");
-		} else {
-			System.out.println("\nTest Suite was NOT successful!" );
-		}
-		
+public class TestTranslationNumber {
+	private TranslationNumber trans = new TranslationNumber();
+
+	@Test
+	public void testTranslationNumber() throws PersistenceExeception{
+		assertEquals("one", trans.translateNum("eins"));
+		assertEquals("two", trans.translateNum("zwei"));
+		assertEquals("three", trans.translateNum("drei"));
+		assertEquals("four", trans.translateNum("vier"));
+		assertEquals("five", trans.translateNum("fuenf"));
+		assertEquals("six", trans.translateNum("sechs"));
+		assertEquals("seven", trans.translateNum("sieben"));
+		assertEquals("eight", trans.translateNum("acht"));
+		assertEquals("nine", trans.translateNum("neun"));
+		assertEquals("ten", trans.translateNum("zehn"));
+		assertEquals("eleven", trans.translateNum("elf"));
+		assertEquals("twelve", trans.translateNum("zwoelf"));
+		assertEquals("thirteen", trans.translateNum("dreizehn"));
+		assertEquals("fourteen", trans.translateNum("vierzehn"));
+		assertEquals("fifteen", trans.translateNum("fuenfzehn"));
+		assertEquals("sixteen", trans.translateNum("sechzehn"));
+		assertEquals("seventeen", trans.translateNum("siebzehn"));
+		assertEquals("eighteen", trans.translateNum("achtzehn"));
+		assertEquals("nineteen", trans.translateNum("neunzehn"));
+		assertEquals("twenty", trans.translateNum("zwanzig"));
+		assertEquals("I don't understand", trans.translateNum("hahaha"));
 	}
 }
