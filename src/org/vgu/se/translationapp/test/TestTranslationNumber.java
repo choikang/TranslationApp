@@ -1,10 +1,11 @@
 package org.vgu.se.translationapp.test;
 
+import org.vgu.se.translationapp.model.logic.PersistenceExeception;
 import org.vgu.se.translationapp.model.logic.TranslationNumber;
 
 public class TestTranslationNumber { 
 	
-	public void run() {
+	public void run() throws PersistenceExeception {
 		TranslationNumber trans = new TranslationNumber();
 		String eins = trans.translate("eins");
 		
@@ -44,11 +45,4 @@ public class TestTranslationNumber {
 		}
 		
 	}
-
-	public static void main(String[] args) {
-		TestTranslationNumber client = new TestTranslationNumber();
-		client.run();
-
-	}
-
 }

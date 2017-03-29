@@ -2,10 +2,15 @@ package org.vgu.se.translationapp.model.entities;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PerformedTranslation implements Serializable {
 	
-
-
+	private int userID;
+	
+	private String expressionGER = null;
+	
+	private String expressionEN = null;
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -39,12 +44,6 @@ public class PerformedTranslation implements Serializable {
 			return false;
 		return true;
 	}
-
-	private int userID;
-	
-	private String expressionGER = null;
-	
-	private String expressionEN = null;
 	
 	public String getExpressionGER() {
 		return expressionGER;

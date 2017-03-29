@@ -40,7 +40,7 @@ public class StoreAndLoadTranslation {
 	 * @throws PersistenceExeception
 	 */
 	
-	public List<PerformedTranslation> loadTrans () throws IOException, ClassNotFoundException {
+	public static List<PerformedTranslation> loadTrans () throws IOException, ClassNotFoundException {
 		List<PerformedTranslation> myList = new ArrayList<PerformedTranslation>();
 		FileInputStream fis = new FileInputStream("store.txt");
 		ObjectInputStream ois = new ObjectInputStream(fis);
@@ -51,8 +51,6 @@ public class StoreAndLoadTranslation {
 		fis.close();
 		return myList;
 	}
-	
-	@SuppressWarnings("unchecked")
 	public void loadPerformedTranslations() throws PersistenceExeception {
 		ObjectInputStream ois = null;
 		FileInputStream fis = null;
@@ -70,8 +68,8 @@ public class StoreAndLoadTranslation {
 		}
 		catch (IOException e) {
 			// Re-throw the exception to the calling context
-			//throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
-			
+			throw new PersistenceExeception("ERROR: The list could not be loaded - File not found!!");
+
 		}
 		catch (ClassNotFoundException e) {
 			// Re-throw the exception to the calling context
