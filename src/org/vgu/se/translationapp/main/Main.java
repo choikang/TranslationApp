@@ -8,6 +8,7 @@ import org.vgu.se.translationapp.model.entities.PerformedTranslation;
 import org.vgu.se.translationapp.model.logic.PersistenceExeception;
 import org.vgu.se.translationapp.model.logic.StoreAndLoadTranslation;
 import org.vgu.se.translationapp.model.logic.TranslationNumber;
+import org.vgu.se.translationapp.model.logic.TranslationPhrase;
 import org.vgu.se.translationapp.view.AdminView;
 
 import javafx.application.Application;
@@ -16,6 +17,7 @@ import javafx.application.Application;
 public class Main {
 	public static void main(String[] args) throws PersistenceExeception {
 		TranslationNumber tnObject = new TranslationNumber();
+		TranslationPhrase tpObject = new TranslationPhrase();
 		List<PerformedTranslation> storedList = new ArrayList<PerformedTranslation>();
 		
 		StoreAndLoadTranslation dbObject = StoreAndLoadTranslation.getInstance();
@@ -32,6 +34,7 @@ public class Main {
 		System.out.print("Greetings! Please sign in with your User ID: ");
 		userID = sc.nextInt();
 		tnObject.signIn(userID);
+		tpObject.signIn(userID);
 		
 		System.out.println("Welcome! Please find your desired options as following: " + "\n" +
 				   		   "1. German - English Num Translator" + "\n" +
@@ -61,7 +64,7 @@ public class Main {
 			else if (option == 2) {
 				System.out.print("German term/phrase: ");
 				input = sc.next();
-				result = tnObject.translateTerm(input);
+				result = tpObject.translateTerm(input);
 				System.out.println("Translation Result: " + result);
 			}
 			else if (option == 3) {
