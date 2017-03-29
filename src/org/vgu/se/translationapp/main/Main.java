@@ -1,5 +1,6 @@
 package org.vgu.se.translationapp.main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,8 +11,10 @@ import org.vgu.se.translationapp.model.logic.StoreAndLoadTranslation;
 import org.vgu.se.translationapp.model.logic.TranslationNumber;
 import org.vgu.se.translationapp.model.logic.TranslationPhrase;
 import org.vgu.se.translationapp.view.AdminView;
+import org.vgu.se.translationapp.view.StatisticView;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 
 
 public class Main {
@@ -62,6 +65,7 @@ public class Main {
 				System.out.println("Translation Result: " + result);
 			}
 			else if (option == 2) {
+				input = sc.nextLine();
 				System.out.print("German term/phrase: ");
 				input = sc.nextLine();
 				result = tpObject.translateTerm(input);
@@ -97,7 +101,21 @@ public class Main {
 				}).start();
 			}
 			else if (option == 6){
-			
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							StatisticView.getInstance().display();
+						} catch (ClassNotFoundException | IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+				});
+				
 			}
 			else if (option == 7){
 

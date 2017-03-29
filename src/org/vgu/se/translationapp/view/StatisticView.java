@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,9 +21,11 @@ import java.util.List;
 /**
  * Created by Hoàng Bryan Nguyễn on 29/03/2017.
  */
-public class StatisticView extends Application implements ViewObserver {
+public class StatisticView implements ViewObserver {
     private static StatisticView statView = null;
-
+    
+    private static Stage statisticStage = new Stage();
+    
     public static StatisticView getInstance() {
         if ( statView == null ) {
             statView = new StatisticView();
@@ -34,7 +37,7 @@ public class StatisticView extends Application implements ViewObserver {
 
     ListView<String> listView = new ListView<>();
 
-    private static Stage primaryStage;
+    
 
     int totalNum, totalPhrase, totalException, total;
     double perNum, perPhrase, perExeption;
@@ -70,11 +73,13 @@ public class StatisticView extends Application implements ViewObserver {
             Button closeBtn = new Button("Close");
             closeBtn.setOnAction(e -> {
                 StoreAndLoadTranslation.getInstance().unregister(AdminView.getInstance());
-                primaryStage.close();
+                statisticStage.close();
             });
 
             //Set layout for the stage
             VBox layout = new VBox();
+            layout.setPadding(new Insets(10, 10,10,10));
+            layout.setSpacing(10);
             Label num = new Label("Performed translation of numbers (1-20): " + Math.round(perNum) + "%");
             Label phrase = new Label("Performed translation of phrases and terms: " + Math.round(perPhrase) + "%");
             Label illegal = new Label("Illegal translations (no translation given): " + Math.round(perExeption)+ "%");
@@ -82,34 +87,39 @@ public class StatisticView extends Application implements ViewObserver {
 
             Scene scene = new Scene(layout, 600, 300);
 
+            Platform.runLater(new Runnable() {
 
-            Platform.runLater(new Runnable(){
-                @Override
-                public void run() {
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
-                }
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					statisticStage.setScene(scene);
+		            statisticStage.show();
+				}
+            	
             });
+            
+
+//            Platform.runLater(new Runnable(){
+//                @Override
+//                public void run() {
+//                    primaryStage.setScene(scene);
+//                    primaryStage.show();
+//                }
+//            });
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void start(Stage primaryStage) throws ClassNotFoundException, IOException {
+    public void display() throws ClassNotFoundException, IOException {
 
-        StatisticView.primaryStage = primaryStage;
-        StatisticView.primaryStage.setTitle("Distribution of performed translations:");
+        //StatisticView.primaryStage = primaryStage;
+        //StatisticView.primaryStage.setTitle("Distribution of performed translations:");
 
         //subscribe this view to the Database
         StoreAndLoadTranslation.getInstance().register(StatisticView.getInstance());
 
         update();
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
 
 }
