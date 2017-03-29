@@ -61,7 +61,7 @@ public class Main {
 			else if (option == 2) {
 				System.out.print("German term/phrase: ");
 				input = sc.next();
-				result = tnObject.translateNum(input);
+				result = tnObject.translateTerm(input);
 				System.out.println("Translation Result: " + result);
 			}
 			else if (option == 3) {
