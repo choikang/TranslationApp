@@ -41,7 +41,7 @@ public class AdminView extends Application implements ViewObserver{
 			
 			if (!performedTransList.isEmpty())
 				for (PerformedTranslation performed : performedTransList ) {
-					String tmp = performed.getExpressionGER() + "\t\t-->>\t\t" + performed.getExpressionEN();
+					String tmp = "UserID : " + performed.getUserID() + "\t\t" + performed.getExpressionGER() + "\t\t-->>\t\t" + performed.getExpressionEN();
 					oPerformedTrans.add(tmp);
 				}
 			listView.setItems(oPerformedTrans);
@@ -57,12 +57,13 @@ public class AdminView extends Application implements ViewObserver{
 			VBox layout = new VBox();			
 			layout.getChildren().addAll(closeBtn, listView);
 			
-			Scene scene = new Scene(layout, 600, 300);
+			
 			
 			
 			Platform.runLater(new Runnable(){
 				@Override
 				public void run() {
+					Scene scene = new Scene(layout, 600, 300);
 					primaryStage.setScene(scene);
 					primaryStage.show();	
 				}
